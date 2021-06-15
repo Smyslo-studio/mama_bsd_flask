@@ -17,10 +17,10 @@
             <th>Ингредиент</th>
             <th>Количество</th>
         </tr>
+        {% set i = 0 %}
         {% for key in ingredients %}
-
-            <tr><td>{{ key }}</td><td>{{ ingredients[key] }}</td></tr>
-            <tr><td><label><input type="text" name="ingredient0" required value="{{ request.form['title'] or key }}"></label></td><td><label><input type="text" name="quantity0" required value="{{ request.form['title'] or ingredients[key] }}"></label></td></tr>
+            <tr><td><label><input type="text" name="ingredient" required value="{{ request.form['title'] or key }}"></label></td><td><label><input type="text" name="quantity0" required value="{{ request.form['title'] or ingredients[key] }}"></label></td></tr>
+            {% set i += 1 %}
         {% endfor %}
     </table>
     <div class="form-group">

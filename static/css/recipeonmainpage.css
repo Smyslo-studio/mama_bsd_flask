@@ -1,11 +1,18 @@
 .recipe {
     float: left;
+    margin: 1em;
+    padding: 0.5em 1em;
+    border: 10px #40382B double;
+    border-radius: 5em;
+    background-color: #CCB289;
+    width: -webkit-fill-available;
 }
 
 .recipe img{
     height: 12em;
     width: auto;
     float: left;
+    border-radius: inherit;
 }
 
 .recipe .recipe_text{

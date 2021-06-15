@@ -50,11 +50,10 @@ def get_post_title(title):
 
 def get_tags_to_recipe(id):
     conn = get_db_connection()
-    content = conn.execute("""SELECT * FROM recipes
+    content = conn.execute("""SELECT * FROM tags
                                 INNER JOIN tags_recipes ON recipes.id = tags_recipes.recipe
                                 INNER JOIN tags ON tags_recipes.tag = tags.id
-                                WHERE recipes.id=?""",
-                        (id,)).fetchall()
+                                WHERE recipes.id=?""", (id,)).fetchall()
     conn.close()
     return content
 
@@ -120,7 +119,7 @@ def index():
     conn = get_db_connection()
     recipes = conn.execute('SELECT * FROM recipes').fetchall()
     conn.close()
-    id = recipes[0]['id']
+    """id = recipes[0]['id']
     tags_content = get_tags_to_recipe(id)
     tag_list = []
     llo = 0
@@ -130,7 +129,7 @@ def index():
             llo += 1
             if llo == 12:
                 tag_list.append(t)
-        llo = 0
+        llo = 0"""
     all_tags = get_all_tags()
     return render_template("index.html", recipes=recipes, all_tags=all_tags)
 
@@ -164,7 +163,15 @@ def edit(recipe_url):
             conn.commit()
             conn.close()
             return redirect(url_for('index'))
-
+    """all_tags = get_all_tags()
+    recipe_tags = get_tags_to_recipe(recipe_content['id'])
+    all_tags_list = []
+    recipe_tags_list = []
+    for i in all_tags:
+        all_tags_list.append(i['title'])
+    for i in recipe_tags:
+        recipe_tags_list.append(i['title'])
+    return render_template('edit.html', recipe=recipe_content, ingredients=ingredients_dist, tags=all_tags, recipe_tags=recipe_tags)"""
     return render_template('edit.html', recipe=recipe_content, ingredients=ingredients_dist)
 
 
@@ -241,7 +248,7 @@ def save():
 
 @app.route('/create_tag', methods=['POST'])
 def create_tag():
-    tag_name = request.form['new_tag']
+    tag_name = request.form['new_tag'].lower()
     do_new_tag(tag_name)
     return redirect(url_for('index'))
 

@@ -30,7 +30,7 @@ a {
 
 .tag {
 	display: inline-block;
-	margin: 0 10px 0 0;
+	margin: 0.2em 0.05em;
 	padding: 0 7px 0 14px;
 	white-space: nowrap;
 	position: relative;

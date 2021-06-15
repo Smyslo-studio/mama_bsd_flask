@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Привет {% endblock %}</h1>
-    <p>Все теги:</p>
+    <h1>{% block title %} k {% endblock %}</h1>
     <div class="tags">
     {% for tag in all_tags %}
         <a href="/searchone?tags={{ tag['id'] }}" class="tag">{{ tag['title'] }}</a></li>
@@ -28,10 +27,9 @@
                 <span class="badge badge-warning">Изменить рецепт</span>
             </a>
             <p>{{ tags_list }}</p>
-            <a href="/searchone?tags=dinner">{{ recipe['tags'] }}</a>
+            <p>{{ recipe['tags'] }}</p>
             <form action="{{ url_for('delete', recipe_url=recipe['url']) }}" method="POST">
                 <input type="submit" value="Удалить рецепт"
-                        class="btn btn-danger btn-sm"
                         onclick="return confirm('Вы правда хотите удалить рецепт')">
             </form>
         </div>
