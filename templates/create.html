@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Create a New Post {% endblock %}</h1>
+
+<form action="/save" method="POST" enctype="multipart/form-data">
+    <h2>Создание</h2>
+    <label>
+        <input type="text" name="title" placeholder="Название рецепта" required>
+    </label>
+
+    <p>Картинка</p>
+    <label>
+        <input type="file" name="file">
+    </label>
+
+    <table>
+        <caption>Список ингредиентов</caption>
+        <tr>
+            <th>Ингредиент</th>
+            <th>Количество</th>
+        </tr>
+        <tr id="input01"><td><label><input type="text" name="ingredient0" required></label></td><td><label><input type="text" name="quantity0" required></label></td></tr>
+    </table>
+    <div id="input0"></div>
+    <input type="button" value="Добавить ингредиент" onclick="addInput()">
+    <div>
+        <h3>Теги</h3>
+        {% for tag in tags %}
+            <label>
+                <input type="checkbox" name="tag" value="{{ tag['title'] }}">
+                {{ tag['title'] }}
+            </label>
+        {% endfor %}
+    </div>
+    <h3>Рецепт</h3>
+    <label>
+        <textarea name="recipe" required rows="15" cols="55"></textarea>
+    </label>
+
+    <input type="submit" value="Сохранить">
+</form>
+
+{% endblock %}

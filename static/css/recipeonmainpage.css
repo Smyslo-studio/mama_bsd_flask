@@ -1,0 +1,13 @@
+.recipe {
+    float: left;
+}
+
+.recipe img{
+    height: 12em;
+    width: auto;
+    float: left;
+}
+
+.recipe .recipe_text{
+    float: left;
+}

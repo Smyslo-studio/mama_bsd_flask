@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Привет {% endblock %}</h1>
+    <p>Все теги:</p>
+    <div class="tags">
+    {% for tag in all_tags %}
+        <a href="/searchone?tags={{ tag['id'] }}" class="tag">{{ tag['title'] }}</a></li>
+    {% endfor %}
+    </div>
+    <form action="/create_tag" method="post">
+        <label>
+            <input type="text" name="new_tag" placeholder="Название нового тега">
+        </label>
+        <input type="submit" value="Новый тег">
+    </form>
+    {% for recipe in recipes %}
+    <div class="recipe">
+                        <!-- функция    аргумент строка стобец
+                             в питоне   функции  в БД   в БД-->
+        <img src="{{ recipe['image'] }}" alt="image" >
+        <div class="recipe_text">
+            <a href="{{ url_for('recipe', recipe_url=recipe['url']) }}">
+                <h2>{{ recipe['title'] }}</h2>
+            </a>
+            <span class="badge badge-primary">{{ recipe['created'] }}</span>
+            <a href="{{ url_for('edit', recipe_url=recipe['url']) }}">
+                <span class="badge badge-warning">Изменить рецепт</span>
+            </a>
+            <p>{{ tags_list }}</p>
+            <a href="/searchone?tags=dinner">{{ recipe['tags'] }}</a>
+            <form action="{{ url_for('delete', recipe_url=recipe['url']) }}" method="POST">
+                <input type="submit" value="Удалить рецепт"
+                        class="btn btn-danger btn-sm"
+                        onclick="return confirm('Вы правда хотите удалить рецепт')">
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

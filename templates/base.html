@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <script type="text/javascript" src="../static/script.js"></script>
+    <!-- Bootstrap CSS -->
+    <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/recipeonmainpage.css">
+    <link rel="stylesheet" href="../static/css/onerecipe.css">
+
+    <title>{% block title %} {% endblock %}</title>
+  </head>
+  <body>
+    <header>
+        <nav class="">
+            <a class="navbar-brand" href="{{ url_for('index')}}">Главная</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('create')}}">Новый рецепт</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <form action="/search" method="POST">
+            <div class="search">
+                <label>
+                    <input type="text" name="search_content" placeholder="Введите название рецепта">
+                    <input type="submit" value="Найти рецепт">
+                </label>
+            </div>
+        </form>
+    </header>
+    
+    <main>
+        
+        {% block content %}
+
+        {% endblock %}
+    </main>
+
+    <footer>
+        лм
+    </footer>
+  </body>
+</html>
+
