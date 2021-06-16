@@ -3,7 +3,7 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <script type="text/javascript" src="../static/script.js"></script>
+    <script type="text/javascript" src="../static/js/script.js"></script>
     <!-- Bootstrap CSS -->
     <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
     <link rel="stylesheet" href="../static/css/style.css">
@@ -24,6 +24,7 @@
                 </ul>
             </div>
         </nav>
+
         <form action="/search" method="POST">
             <div class="search">
                 <label>
@@ -31,6 +32,19 @@
                     <input type="submit" value="Найти рецепт">
                 </label>
             </div>
+        </form>
+
+        <div class="tags">
+            {% for tag in tags %}
+                <a href="/searchone?tags={{ tag['id'] }}" class="tag">{{ tag['title'] }}</a></li>
+            {% endfor %}
+        </div>
+        
+        <form action="/create_tag" method="post">
+            <label>
+                <input type="text" name="new_tag" placeholder="Название нового тега">
+            </label>
+            <input type="submit" value="Новый тег">
         </form>
     </header>
     

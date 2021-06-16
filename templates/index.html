@@ -2,17 +2,7 @@
 
 {% block content %}
     <h1>{% block title %} k {% endblock %}</h1>
-    <div class="tags">
-    {% for tag in all_tags %}
-        <a href="/searchone?tags={{ tag['id'] }}" class="tag">{{ tag['title'] }}</a></li>
-    {% endfor %}
-    </div>
-    <form action="/create_tag" method="post">
-        <label>
-            <input type="text" name="new_tag" placeholder="Название нового тега">
-        </label>
-        <input type="submit" value="Новый тег">
-    </form>
+    
     {% for recipe in recipes %}
     <div class="recipe">
                         <!-- функция    аргумент строка стобец

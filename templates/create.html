@@ -1,44 +1,91 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{% block title %} Create a New Post {% endblock %}</h1>
 
-<form action="/save" method="POST" enctype="multipart/form-data">
-    <h2>Создание</h2>
-    <label>
-        <input type="text" name="title" placeholder="Название рецепта" required>
-    </label>
+<h1>{% block title %} {{ page_title }} {% endblock %}</h1>
 
-    <p>Картинка</p>
-    <label>
-        <input type="file" name="file">
-    </label>
+{% if recipe %}
+    <form action="/save" method="POST">
+        <h2>{{ page_title }}</h2>
+        <label>
+            <input type="text" name="title" placeholder="Название рецепта" required value="{{ recipe['title'] }}">
+        </label>
 
-    <table>
-        <caption>Список ингредиентов</caption>
-        <tr>
-            <th>Ингредиент</th>
-            <th>Количество</th>
-        </tr>
-        <tr id="input01"><td><label><input type="text" name="ingredient0" required></label></td><td><label><input type="text" name="quantity0" required></label></td></tr>
-    </table>
-    <div id="input0"></div>
-    <input type="button" value="Добавить ингредиент" onclick="addInput()">
-    <div>
-        <h3>Теги</h3>
-        {% for tag in tags %}
-            <label>
-                <input type="checkbox" name="tag" value="{{ tag['title'] }}">
-                {{ tag['title'] }}
-            </label>
-        {% endfor %}
-    </div>
-    <h3>Рецепт</h3>
-    <label>
-        <textarea name="recipe" required rows="15" cols="55"></textarea>
-    </label>
+        <p>Картинка</p>
+        <label>
+            <input type="file" name="file">
+        </label>
 
-    <input type="submit" value="Сохранить">
-</form>
+        <table>
+            <caption>Список ингредиентов</caption>
+            <tr>
+                <th>Ингредиент</th>
+                <th>Количество</th>
+            </tr>
+            <tr id="input01"><td><label><input type="text" name="ingredient0" required></label></td><td><label><input type="text" name="quantity0" required></label></td></tr>
+        </table>
+        <div id="input0"></div>
+        <input type="button" value="Добавить ингредиент" onclick="addInput()">
+        <div>
+            <h3>Теги</h3>
+            {% for tag in use_tags %}
+                <label>
+                    <input type="checkbox" name="tag" value="{{ tag }}" checked>
+                    {{ tag }}
+                </label>
+            {% endfor %}
+            {% for tag in unusing_tags %}
+                <label>
+                    <input type="checkbox" name="tag" value="{{ tag }}">
+                    {{ tag }}
+                </label>
+            {% endfor %}
+        </div>
+        <h3>Рецепт</h3>
+        <label>
+            <textarea name="recipe" required rows="15" cols="55">{{ request.form['recipe'] or recipe['recipe'] }}</textarea>
+        </label>
+
+        <input type="submit" value="Сохранить">
+    </form>
+{% else %}
+    <form action="/save" method="POST">
+        <h2>{{ page_title }}</h2>
+        <label>
+            <input type="text" name="title" placeholder="Название рецепта" required>
+        </label>
+
+        <p>Картинка</p>
+        <label>
+            <input type="file" name="file">
+        </label>
+
+        <table>
+            <caption>Список ингредиентов</caption>
+            <tr>
+                <th>Ингредиент</th>
+                <th>Количество</th>
+            </tr>
+            <tr id="input01"><td><label><input type="text" name="ingredient0" required></label></td><td><label><input type="text" name="quantity0" required></label></td></tr>
+        </table>
+        <div id="input0"></div>
+        <input type="button" value="Добавить ингредиент" onclick="addInput()">
+        <div>
+            <h3>Теги</h3>
+            {% for tag in tags %}
+                <label>
+                    <input type="checkbox" name="tag" value="{{ tag['title'] }}">
+                    {{ tag['title'] }}
+                </label>
+            {% endfor %}
+        </div>
+        <h3>Рецепт</h3>
+        <label>
+            <textarea name="recipe" required rows="15" cols="55"></textarea>
+        </label>
+
+        <input type="submit" value="Сохранить">
+    </form>
+{% endif %}
 
 {% endblock %}
