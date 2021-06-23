@@ -4,7 +4,7 @@
     <h2>{% block title %} {{ recipe['title'] }} {% endblock %}</h2>
     <span class="badge badge-primary">{{ recipe['created'] }}</span>
     <div class="tags">
-        {% for tag in tags %}
+        {% for tag in tags_to_recipe %}
             <p>{{ tag }}</p>
         {% endfor %}
     </div>

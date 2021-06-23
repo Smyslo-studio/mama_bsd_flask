@@ -52,18 +52,17 @@ def index():
                 tag_list.append(t)
         llo = 0"""
     all_tags = databaseGet.get_all_tags()
-    return render_template("index.html", recipes=recipes, all_tags=all_tags)
+    return render_template("index.html", recipes=recipes, tags=all_tags)
 
 
 @app.route('/<recipe_url>')
 def recipe(recipe_url):
     recipe_content = databaseGet.get_one_post_with_url(str(recipe_url))
-    tags = recipe_content['tags']
-    tags = tags.split(',')
-    print(tags)
+    tags = databaseGet.get_all_tags()
+    ttr = databaseGet.get_tags_to_recipe(recipe_url)
     ingredients = recipe_content['ingredients']
     ingredients_dist = json.loads(ingredients)
-    return render_template('recipe.html', tags=tags, recipe=recipe_content, ingredients=ingredients_dist)
+    return render_template('recipe.html', tags=tags, tags_to_recipe=ttr, recipe=recipe_content, ingredients=ingredients_dist)
 
 
 @app.route('/<recipe_url>/edit', methods=('POST', 'GET'))
@@ -71,7 +70,9 @@ def edit(recipe_url):
     tags = databaseGet.get_all_tags()
     post = databaseGet.get_one_post_with_url(recipe_url)
     using_tags_list, unusing_tags_list = using_tags(recipe_url)
-    return render_template('create.html', recipe=post, tags=tags, page_title="Редактирование", use_tags=using_tags_list, unusing_tags=unusing_tags_list)
+    ingredients = post['ingredients']
+    ingredients_dist = json.loads(ingredients)
+    return render_template('create.html', recipe=post, tags=tags, page_title="Редактирование", use_tags=using_tags_list, unusing_tags=unusing_tags_list, ingredients=ingredients_dist)
 
 
 @app.route('/<recipe_url>/delete', methods=['POST'])
@@ -108,7 +109,8 @@ def save():
             try:
                 ingredient = request.form['ingredient' + str(i)]
                 quantity = request.form['quantity' + str(i)]
-                ingredient_list += ('"' + ingredient + '": ' + '"' + quantity + '", ')
+                if not ingredient == '' and not quantity == '':
+                    ingredient_list += ('"' + ingredient + '": ' + '"' + quantity + '", ')
                 i += 1
             except KeyError:
                 break
