@@ -60,9 +60,8 @@ def recipe(recipe_url):
     recipe_content = databaseGet.get_one_post_with_url(str(recipe_url))
     tags = databaseGet.get_all_tags()
     ttr = databaseGet.get_tags_to_recipe(recipe_url)
-    ingredients = recipe_content['ingredients']
-    ingredients_dist = json.loads(ingredients)
-    return render_template('recipe.html', tags=tags, tags_to_recipe=ttr, recipe=recipe_content, ingredients=ingredients_dist)
+    ingredients = databaseGet.get_ingredients_to_recipe_by_recipe_id(recipe_content['id'])
+    return render_template('recipe.html', tags=tags, tags_to_recipe=ttr, recipe=recipe_content, ingredients=ingredients)
 
 
 @app.route('/<recipe_url>/edit', methods=('POST', 'GET'))
@@ -122,7 +121,9 @@ def save():
             tags2 += '|'
         tags2 = tags2[:-1]
         recipe_content = request.form['recipe']
-        databasePost.post_new_recipe(title, recipe_url, tags2, ingredient_list, recipe_content, image_path)
+        source = request.form['source']
+
+        databasePost.post_new_recipe(title, recipe_url, tags2, ingredient_list, recipe_content, image_path, source)
 
         recipe_content = databaseGet.get_one_post_with_url(recipe_url)
         recipe_id = recipe_content['id']
@@ -137,9 +138,9 @@ def create_tag():
     return redirect(url_for('index'))
 
 
-@app.route('/search', methods=['POST'])
+@app.route('/search', methods=['GET'])
 def search():
-    title = request.form['search_content']
+    title = request.args.get('title')
     recipes = databaseGet.search_posts_with_title(title.title())
     all_tags = databaseGet.get_all_tags()
     return render_template("index.html", recipes=recipes, all_tags=all_tags)

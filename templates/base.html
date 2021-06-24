@@ -1,11 +1,8 @@
 <!doctype html>
 <html lang="ru">
   <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <script type="text/javascript" src="../static/js/script.js"></script>
-    <!-- Bootstrap CSS -->
-    <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
     <link rel="stylesheet" href="../static/css/style.css">
     <link rel="stylesheet" href="../static/css/recipeonmainpage.css">
     <link rel="stylesheet" href="../static/css/onerecipe.css">
@@ -19,20 +16,27 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('create')}}">Новый рецепт</a>
+                        <a class="nav-link" href="{{url_for('create')}}">Добавить рецепт</a>
                     </li>
                 </ul>
             </div>
         </nav>
 
-        <form action="/search" method="POST">
+        <!--<form action="/search" method="POST">
             <div class="search">
                 <label>
-                    <input type="text" name="search_content" placeholder="Введите название рецепта">
-                    <input type="submit" value="Найти рецепт">
+                    <input class="search_input" type="text" name="search_content" placeholder="Введите название рецепта">
+                    <input type="submit" value="Найти" onclick="search_generate_url('title')">
                 </label>
             </div>
-        </form>
+        </form>-->
+
+        <div class="search">
+            <label>
+                <input class="search_input" type="text" name="search_content" placeholder="Введите название рецепта">
+                <input type="button" value="Найти" onclick="search_generate_url('title')">
+            </label>
+        </div>
 
         <div class="tags">
             {% for tag in tags %}

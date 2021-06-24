@@ -47,6 +47,10 @@ class DatabaseGet(object):
         posts = self.cursor.execute("SELECT * FROM recipes WHERE title LIKE ?", ("%" + title + "%",)).fetchall()
         return posts
 
+    def get_ingredients_to_recipe_by_recipe_id(self, recipe_id):
+        ingredients = self.cursor.execute("SELECT * FROM ingredients WHERE recipe_id=?", (recipe_id,)).fetchall()
+        return ingredients
+
     def __del__(self):
         print('Ok')
         self.cursor.close()
@@ -72,12 +76,12 @@ class DatabasePost(object):
             self.cursor.execute(_SQL, (recipe_id, tag_id))
             self.connection.commit()
 
-    def post_new_recipe(self, title, url, tags, ingredients, recipe_content, image_name):
+    def post_new_recipe(self, title, url, tags, ingredients, recipe_content, image_name, source):
         _SQL = """insert into recipes
-            (title, url, tags, ingredients, recipe, image)
+            (title, url, tags, ingredients, recipe, image, source)
             values
-            (?, ?, ?, ?, ?, ?)"""
-        self.cursor.execute(_SQL, (title, url, tags, ingredients, recipe_content, image_name))
+            (?, ?, ?, ?, ?, ?, ?)"""
+        self.cursor.execute(_SQL, (title, url, tags, ingredients, recipe_content, image_name, source))
         self.connection.commit()
 
     def post_new_tag(self, tag_name):

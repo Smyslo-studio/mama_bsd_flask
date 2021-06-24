@@ -8,20 +8,25 @@
             <p>{{ tag }}</p>
         {% endfor %}
     </div>
-    <div class="ingredients">
-        <table>
-        <caption>Список ингредиентов</caption>
-        <tr>
-            <th>Ингредиент</th>
-            <th>Количество</th>
-        </tr>
+    <div>
+        <img src="{{ recipe['image'] }}" alt="img">
+    </div>
+
+    <div id="inputing">
+        <h4>Ингредиенты</h4>
         {% for key in ingredients %}
-            <tr><td>{{ key }}</td><td>{{ ingredients[key] }}</td></tr>
+            <div>
+                <p>{{ key['ingredient'] }}</p>
+                <p>{{ key['quantity'] }}</p>
+                <p>{{ key['quantity_spoon'] }}</p>
+            </div>
+            
         {% endfor %}
-    </table>
     </div>
 
     <div class="recipe">
         {{ recipe['recipe'] }}
     </div>
+
+    <p>{{ recipe['source'] }}</p>
 {% endblock %}

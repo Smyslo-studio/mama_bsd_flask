@@ -2,20 +2,27 @@ let x = 0;
 
 
 function addInput() {
-    let str2 = '<tr id="input' + x + '"></tr>';
+    let str2 = '<div id="input' + x + '"></div>';
     document.getElementById('inputing').innerHTML += str2;
     
-    let str = '<td><label><input type="text" name="ingredient' + (x + 1) +'"></label></td><td><label><input type="text" name="quantity' + (x + 1) + '"></label></td>';
+    let str = '<label><input type="text" name="ingredient' + (x + 1) + '"></label><label><input type="text" name="quantity' + (x + 1) + '"></label><label><input type="text" name="quantity_spoon' + (x + 1) + '"></label>';
     document.getElementById('input' + x).innerHTML = str;
     x++;
 }
 
 
-function addIng(ingredient, quantity) {
-    let str2 = '<tr id="input' + x + '"></tr>';
+function addIng(ingredient, quantity, quantity_spoon) {
+    let str2 = '<div id="input' + x + '"></div>';
     document.getElementById('inputing').innerHTML += str2;
     
-    let str = '<td><label><input type="text" name="ingredient' + (x + 1) +'" value="' + ingredient + '"></label></td><td><label><input type="text" name="quantity' + (x + 1) + '" value="' + quantity + '"></label></td>';
+    let str = '<label><input type="text" name="ingredient' + (x + 1) + '" value="' + ingredient + '"></label><label><input type="text" name="quantity' + (x + 1) + '" value="' + quantity + '"></label><label><input type="text" name="quantity_spoon' + (x + 1) + '" value="' + quantity_spoon + '"></label>';
     document.getElementById('input' + x).innerHTML = str;
     x++;
+}
+
+function search_generate_url(type) {
+    let search_content = document.getElementsByClassName('search_input')[0].value
+    console.log(search_content)
+    let url = '/search?' + type + '=' + search_content;
+    history.replaceState({page: "search"}, "search_page", url)
 }
