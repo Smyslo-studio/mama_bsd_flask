@@ -82,12 +82,12 @@ class DatabasePost(object):
             self.cursor.execute(_SQL, (recipe_id, tag_id))
             self.connection.commit()
 
-    def post_new_recipe(self, title, url, tags, ingredients, recipe_content, image_name, source):
+    def post_new_recipe(self, title, url, tags, recipe_content, image_name, source):
         _SQL = """insert into recipes
-            (title, url, tags, ingredients, recipe, image, source)
+            (title, url, tags, recipe, image, source)
             values
-            (?, ?, ?, ?, ?, ?, ?)"""
-        self.cursor.execute(_SQL, (title, url, tags, ingredients, recipe_content, image_name, source))
+            (?, ?, ?, ?, ?, ?)"""
+        self.cursor.execute(_SQL, (title, url, tags, recipe_content, image_name, source))
         self.connection.commit()
 
     def post_new_tag(self, tag_name):
@@ -105,6 +105,15 @@ class DatabasePost(object):
     def delete_post_with_url(self, url):
         self.cursor.execute('DELETE FROM recipes WHERE url = ?', (url,))
         self.connection.commit()
+
+    def add_ingredient_to_db_with_list(self, recipe_id, ingredient_list, quantity_list, quantity_spoon_list):
+        _SQL = """INSERT INTO ingredients
+                (recipe_id, ingredient, quantity, quantity_spoon)
+                VALUES
+                (?, ?, ?, ?)"""
+        for i in range(len(ingredient_list)):
+            self.cursor.execute(_SQL, (recipe_id, ingredient_list[i], quantity_list[i], quantity_spoon_list[i]))
+            self.connection.commit()
 
     def __del__(self):
         self.connection.commit()

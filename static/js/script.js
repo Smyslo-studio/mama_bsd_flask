@@ -1,16 +1,5 @@
 let x = 0;
 
-
-function addInput() {
-    let str2 = '<div id="input' + x + '"></div>';
-    document.getElementById('inputing').innerHTML += str2;
-    
-    let str = '<label><input type="text" name="ingredient' + (x + 1) + '"></label><label><input type="text" name="quantity' + (x + 1) + '"></label><label><input type="text" name="quantity_spoon' + (x + 1) + '"></label>';
-    document.getElementById('input' + x).innerHTML = str;
-    x++;
-}
-
-
 function addIng(ingredient, quantity, quantity_spoon) {
     let str2 = '<div id="input' + x + '"></div>';
     document.getElementById('inputing').innerHTML += str2;
@@ -32,4 +21,12 @@ function search_generate_url(type, search_content) {
     console.log(search_content)
     let url = 'search?' + type + '=' + search_content;
     location.assign(url);
+}
+
+function addInput() {
+    var str = '<label><input type="text" name="ingredient' + (x + 1) + '"></label><label><input type="text" name="quantity' + (x + 1) + '"></label><label><input type="text" name="quantity_spoon' + (x + 1) + '"></label>';
+    var div_var = document.createElement("div");
+    div_var.innerHTML = str;
+    document.getElementById('inputing').append(div_var);
+    x++
 }

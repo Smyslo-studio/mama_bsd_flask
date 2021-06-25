@@ -104,6 +104,7 @@ def save():
         else:
             image_path = "../static/images/xleb.jpg"
 
+        """
         while True:
             try:
                 ingredient = request.form['ingredient' + str(i)]
@@ -113,7 +114,26 @@ def save():
                 i += 1
             except KeyError:
                 break
-        ingredient_list = '{' + ingredient_list[:-2] + '}'
+        ingredient_list = '{' + ingredient_list[:-2] + '}'"""
+
+        ingredient_list = []
+        quantity_list = []
+        quantity_spoon_list = []
+
+        while True:
+            try:
+                ingredient = request.form['ingredient' + str(i)]
+                quantity = request.form['quantity' + str(i)]
+                quantity_spoon = request.form['quantity_spoon' + str(i)]
+
+                ingredient_list.append(ingredient)
+                quantity_list.append(quantity)
+                quantity_spoon_list.append(quantity_spoon)
+
+                i += 1
+            except KeyError:
+                break
+
         tags2 = ''
         tags = request.form.getlist('tag')
         for i in tags:
@@ -123,10 +143,13 @@ def save():
         recipe_content = request.form['recipe']
         source = request.form['source']
 
-        databasePost.post_new_recipe(title, recipe_url, tags2, ingredient_list, recipe_content, image_path, source)
+        databasePost.post_new_recipe(title, recipe_url, tags2, recipe_content, image_path, source)
 
         recipe_content = databaseGet.get_one_post_with_url(recipe_url)
         recipe_id = recipe_content['id']
+
+        databasePost.add_ingredient_to_db_with_list(recipe_id, ingredient_list, quantity_list, quantity_spoon_list)
+
         databasePost.connect_tags_id_and_recipe_id_and_add_to_tag_recipe(recipe_id, tags)
     return redirect(url_for('index'))
 
