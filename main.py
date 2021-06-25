@@ -141,17 +141,18 @@ def create_tag():
 @app.route('/search', methods=['GET'])
 def search():
     title = request.args.get('title')
-    recipes = databaseGet.search_posts_with_title(title.title())
+    tag_id = request.args.get('tag')
+    ingredient = request.args.get('ingredient')
+    if title:
+        recipes = databaseGet.search_posts_with_title(title.title())
+    elif tag_id:
+        recipes = databaseGet.get_recipe_with_tag_id(tag_id)
+    elif ingredient:
+        recipes = databaseGet.search_posts_with_ingredient(ingredient)
+    else:
+        recipes = 0
     all_tags = databaseGet.get_all_tags()
-    return render_template("index.html", recipes=recipes, all_tags=all_tags)
-
-
-@app.route('/searchone', methods=['GET'])
-def searchone():
-    tag_id = request.args.get('tags')
-    recipes = databaseGet.get_recipe_with_tag_id(tag_id)
-    all_tags = databaseGet.get_all_tags()
-    return render_template("index.html", recipes=recipes, all_tags=all_tags)
+    return render_template("index.html", recipes=recipes, tags=all_tags)
 
 
 if __name__ == '__main__':

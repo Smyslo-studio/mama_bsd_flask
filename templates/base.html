@@ -22,25 +22,23 @@
             </div>
         </nav>
 
-        <!--<form action="/search" method="POST">
-            <div class="search">
-                <label>
-                    <input class="search_input" type="text" name="search_content" placeholder="Введите название рецепта">
-                    <input type="submit" value="Найти" onclick="search_generate_url('title')">
-                </label>
-            </div>
-        </form>-->
-
         <div class="search">
             <label>
-                <input class="search_input" type="text" name="search_content" placeholder="Введите название рецепта">
-                <input type="button" value="Найти" onclick="search_generate_url('title')">
+                <input class="search_input" type="text" name="search_content" placeholder="Введите">
+                <select id="type_input">
+                    <option value="title">Название</option>
+                    <option value="ingredient">Ингредиент</option>
+                </select>
+                <input type="button" value="Найти" onclick="search_generate_url()">
             </label>
         </div>
 
+        
+
         <div class="tags">
             {% for tag in tags %}
-                <a href="/searchone?tags={{ tag['id'] }}" class="tag">{{ tag['title'] }}</a></li>
+                {% set tag_id =  tag['id'] %}
+                <button onclick="search_generate_url('tag', '{{ tag_id }}')" class="tag">{{ tag['title'] }}</button>
             {% endfor %}
         </div>
         

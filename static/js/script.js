@@ -20,9 +20,16 @@ function addIng(ingredient, quantity, quantity_spoon) {
     x++;
 }
 
-function search_generate_url(type) {
-    let search_content = document.getElementsByClassName('search_input')[0].value
+function search_generate_url(type, search_content) {
+    if (!type) {
+        var select = document.getElementById('type_input')
+        var type = select.options[select.selectedIndex].value;
+    }
+    if (!search_content) {
+        var search_content = document.getElementsByClassName('search_input')[0].value
+    }
+    console.log(type)
     console.log(search_content)
-    let url = '/search?' + type + '=' + search_content;
-    history.replaceState({page: "search"}, "search_page", url)
+    let url = 'search?' + type + '=' + search_content;
+    location.assign(url);
 }

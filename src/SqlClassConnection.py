@@ -47,6 +47,12 @@ class DatabaseGet(object):
         posts = self.cursor.execute("SELECT * FROM recipes WHERE title LIKE ?", ("%" + title + "%",)).fetchall()
         return posts
 
+    def search_posts_with_ingredient(self, ingredient):
+        posts = self.cursor.execute("""SELECT * FROM recipes
+                                        INNER JOIN ingredients ON recipes.id = ingredients.recipe_id
+                                        WHERE ingredients.ingredient LIKE ?""", ("%" + ingredient + "%",)).fetchall()
+        return posts
+
     def get_ingredients_to_recipe_by_recipe_id(self, recipe_id):
         ingredients = self.cursor.execute("SELECT * FROM ingredients WHERE recipe_id=?", (recipe_id,)).fetchall()
         return ingredients
