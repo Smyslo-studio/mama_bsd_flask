@@ -40,18 +40,10 @@ def using_tags(recipe_url):
 @app.route('/', methods=('POST', 'GET'))
 def index():
     recipes = databaseGet.get_all_posts()
-    """id = recipes[0]['id']
-    tags_content = get_tags_to_recipe(id)
-    tag_list = []
-    llo = 0
-    print(tags_content)
-    for i in tags_content:
-        for t in i:
-            llo += 1
-            if llo == 12:
-                tag_list.append(t)
-        llo = 0"""
     all_tags = databaseGet.get_all_tags()
+    for i in recipes:
+        print(i)
+        print(i['image'])
     return render_template("index.html", recipes=recipes, tags=all_tags)
 
 

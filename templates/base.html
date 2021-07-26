@@ -8,7 +8,7 @@
     <title>{% block title %} {% endblock %}</title>
   </head>
   <body>
-    <header>
+    <div class="container">
         <nav class="">
             <a class="navbar-brand" href="{{ url_for('index')}}">Главная</a>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -31,14 +31,27 @@
             </label>
         </div>
 
-        
+        <div class="columns">
+            <div class="column is-one-quarterd tags">
+                <div class="field is-grouped is-grouped-multiline"></div>
+                    {% for tag in tags %}
+                        <div class="control">
+                            <div class="tags has-addons are-large">
+                                <a class="tag is-link" href="search?tag={{ tag['id'] }}">{{ tag['title'] }}</a>
+                                <a class="tag is-delete"></a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                  </div>
+            </div>
+            <div class="column">
+                {% block content %}
 
-        <div class="tags">
-            {% for tag in tags %}
-                {% set tag_id =  tag['id'] %}
-                <button onclick="search_generate_url('tag', '{{ tag_id }}')" class="tag">{{ tag['title'] }}</button>
-            {% endfor %}
+                {% endblock %}
+            </div>
         </div>
+
+
         
         <form action="/create_tag" method="post">
             <label>
@@ -46,18 +59,17 @@
             </label>
             <input type="submit" value="Новый тег">
         </form>
-    </header>
-    
-    <main>
-        
-        {% block content %}
 
-        {% endblock %}
-    </main>
-
-    <footer>
-        лм
-    </footer>
+    <footer class="footer">
+        <div class="content has-text-centered">
+          <p>
+            <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
+            <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+            is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+          </p>
+        </div>
+      </footer>
+    </div>
   </body>
 </html>
 

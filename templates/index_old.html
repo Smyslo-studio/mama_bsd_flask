@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} k {% endblock %}</h1>
+    
+    {% for recipe in recipes %}
+      <div class="recipe">
+                          <!-- функция    аргумент строка стобец
+                              в питоне   функции  в БД   в БД-->
+          <img src="{{ recipe['image'] }}" alt="image" >
+          <div class="recipe_text">
+              <a href="{{ url_for('recipe', recipe_url=recipe['url']) }}">
+                  <h2>{{ recipe['title'] }}</h2>
+              </a>
+              <span class="badge badge-primary">{{ recipe['created'] }}</span>
+              <a href="{{ url_for('edit', recipe_url=recipe['url']) }}">
+                  <span class="badge badge-warning">Изменить рецепт</span>
+              </a>
+              <p>{{ tags_list }}</p>
+              <p>{{ recipe['tags'] }}</p>
+              <form action="{{ url_for('delete', recipe_url=recipe['url']) }}" method="POST">
+                  <input type="submit" value="Удалить рецепт"
+                          onclick="return confirm('Вы правда хотите удалить рецепт')">
+              </form>
+          </div>
+      </div>
+    {% endfor %}
+
+    <div class="card">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img src="{{ recipe['image'] }}" alt="Placeholder image">
+          </figure>
+        </div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+              </figure>
+            </div>
+            <div class="media-content">
+              <p class="title is-4">{{ recipe['title'] }}</p>
+              <p class="subtitle is-6">{{ recipe['source'] }}</p>
+            </div>
+          </div>
+      
+          <div class="content">
+            {{ recipe['recipe'][0, 5] }}
+            <br>
+            <time>{{ recipe['created'] }}</time>
+          </div>
+        </div>
+      </div>
+{% endblock %}
