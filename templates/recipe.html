@@ -24,6 +24,33 @@
         {% endfor %}
     </div>
 
+    <table class="table">
+        <thead>
+          <tr>
+            <th class="is-size-5 has-text-weight-medium">Ингредиент</th>
+            <th class="is-size-5 has-text-weight-medium">Объём</th>
+            <th class="is-size-5 has-text-weight-medium">Количество</th>
+          </tr>
+        </thead>
+        <tfoot>
+            <tr>
+              <th class="has-text-weight-light is-size-6">Название</th>
+              <th class="has-text-weight-light is-size-6">Граммы/литры</th>
+              <th class="has-text-weight-light is-size-6">Ложки</th>
+            </tr>
+          </tfoot>
+        <tbody>
+            {% for key in ingredients %}
+            <tr>
+                <td>{{ key['ingredient'] }}</td>
+                <td>{{ key['quantity'] }}</td>
+                <td>{{ key['quantity_spoon'] }}</td>
+            </tr>
+            
+            {% endfor %}
+        </tbody>
+    </table>
+
     <div class="recipe">
         {{ recipe['recipe'] }}
     </div>
