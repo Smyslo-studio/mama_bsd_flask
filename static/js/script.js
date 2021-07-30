@@ -3,9 +3,13 @@ let x = 0;
 function addIng(ingredient, quantity, quantity_spoon) {
     let str2 = '<div id="input' + x + '"></div>';
     document.getElementById('inputing').innerHTML += str2;
-    
+
+    let id = "'input" + x + "'"
+
+    let str3 = '<button class="tag is-delete" onclick="delInput(' + id + ')"></button>'
     let str = '<label><input type="text" name="ingredient' + (x + 1) + '" value="' + ingredient + '"></label><label><input type="text" name="quantity' + (x + 1) + '" value="' + quantity + '"></label><label><input type="text" name="quantity_spoon' + (x + 1) + '" value="' + quantity_spoon + '"></label>';
-    document.getElementById('input' + x).innerHTML = str;
+    
+    document.getElementById('input' + x).innerHTML = str+str3;
     x++;
 }
 
@@ -29,4 +33,8 @@ function addInput() {
     div_var.innerHTML = str;
     document.getElementById('inputing').append(div_var);
     x++
+}
+
+function delInput(id) {
+    document.getElementById(id).remove();
 }

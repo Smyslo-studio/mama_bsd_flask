@@ -1,75 +1,82 @@
 <!doctype html>
 <html lang="ru">
-  <head>
-    <meta charset="utf-8">
-    <script type="text/javascript" src="../static/js/script.js"></script>
-    <link rel="stylesheet" href="../static/css/bulma.css">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type="text/javascript" src="../static/js/script.js"></script>
+        <link rel="stylesheet" href="../static/css/bulma.css">
+        <title>{% block title %} {% endblock %}</title>
+    </head>
 
-    <title>{% block title %} {% endblock %}</title>
-  </head>
-  <body>
-    <div class="container">
-        <nav class="">
-            <a class="navbar-brand" href="{{ url_for('index')}}">Главная</a>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('create')}}">Добавить рецепт</a>
-                    </li>
-                </ul>
+    <body>
+
+        <div class="container">
+            <nav class="navbar">
+                <a class="navbar-brand" href="{{ url_for('index')}}">Главная</a>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url_for('create')}}">Добавить рецепт</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="search">
+                <label>
+                    <input class="search_input" type="text" name="search_content" placeholder="Введите">
+                    <select id="type_input">
+                        <option value="title">Название</option>
+                        <option value="ingredient">Ингредиент</option>
+                    </select>
+                    <input type="button" value="Найти" onclick="search_generate_url()">
+                </label>
             </div>
-        </nav>
 
-        <div class="search">
-            <label>
-                <input class="search_input" type="text" name="search_content" placeholder="Введите">
-                <select id="type_input">
-                    <option value="title">Название</option>
-                    <option value="ingredient">Ингредиент</option>
-                </select>
-                <input type="button" value="Найти" onclick="search_generate_url()">
-            </label>
-        </div>
-
-        <div class="columns">
-            <div class="column is-one-quarterd tags">
-                <div class="field is-grouped is-grouped-multiline"></div>
-                    {% for tag in tags %}
-                        <div class="control">
-                            <div class="tags has-addons are-large">
-                                <a class="tag is-link" href="search?tag={{ tag['id'] }}">{{ tag['title'] }}</a>
-                                <a class="tag is-delete"></a>
+            <div class="columns">
+                <div class="column is-one-quarterd tags">
+                    <div class="field is-grouped is-grouped-multiline">
+                        {% for tag in tags %}
+                            <div class="control">
+                                <div class="tags has-addons are-large">
+                                    <a class="tag is-link" href="search?tag={{ tag['id'] }}">{{ tag['title'] }}</a>
+                                    <a class="tag is-delete"></a>
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
-                  </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="column is-three-quarters">
+                    <div class="columns">
+                        {% block content %}
+
+                        {% endblock %}
+                    </div>
+                </div>
             </div>
-            <div class="column">
-                {% block content %}
 
-                {% endblock %}
+
+            
+            <form action="/create_tag" method="post">
+                <label>
+                    <input type="text" name="new_tag" placeholder="Название нового тега">
+                </label>
+                <input type="submit" value="Новый тег">
+            </form>
+            
+            
+
+
+        <footer class="footer">
+            <div class="content has-text-centered">
+            <p>
+                <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
+                <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+                is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+            </p>
             </div>
-        </div>
+        </footer>
 
-
-        
-        <form action="/create_tag" method="post">
-            <label>
-                <input type="text" name="new_tag" placeholder="Название нового тега">
-            </label>
-            <input type="submit" value="Новый тег">
-        </form>
-
-    <footer class="footer">
-        <div class="content has-text-centered">
-          <p>
-            <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
-            <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
-            is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
-          </p>
-        </div>
-      </footer>
-    </div>
-  </body>
+    </body>
 </html>
 

@@ -12,6 +12,10 @@ class DatabaseGet(object):
         posts = self.cursor.execute('SELECT * FROM recipes').fetchall()
         return posts
 
+    def get_posts_from_to(self, qua_f, qua_t):
+        posts = self.cursor.execute('SELECT * FROM recipes LIMIT ' + str(qua_f) + ', ' + str(qua_t)).fetchall()
+        return posts
+
     def get_one_post_with_url(self, url):
         post = self.cursor.execute('SELECT * FROM recipes WHERE url = ?', (url,)).fetchone()
         return post

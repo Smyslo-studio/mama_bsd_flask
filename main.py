@@ -39,12 +39,17 @@ def using_tags(recipe_url):
 
 @app.route('/', methods=('POST', 'GET'))
 def index():
-    recipes = databaseGet.get_all_posts()
+    recipes = databaseGet.get_posts_from_to(0, 100)
+    i = 0
+    recipes_list = [[], [], []]
+    for res in recipes:
+        if i > 2:
+            i = 0
+        recipes_list[i].append(res)
+        i += 1
+
     all_tags = databaseGet.get_all_tags()
-    for i in recipes:
-        print(i)
-        print(i['image'])
-    return render_template("index.html", recipes=recipes, tags=all_tags)
+    return render_template("index.html", recipes=recipes_list, tags=all_tags, pagination_list=0)
 
 
 @app.route('/<recipe_url>')
@@ -61,9 +66,8 @@ def edit(recipe_url):
     tags = databaseGet.get_all_tags()
     post = databaseGet.get_one_post_with_url(recipe_url)
     using_tags_list, unusing_tags_list = using_tags(recipe_url)
-    ingredients = post['ingredients']
-    ingredients_dist = json.loads(ingredients)
-    return render_template('create.html', recipe=post, tags=tags, page_title="Редактирование", use_tags=using_tags_list, unusing_tags=unusing_tags_list, ingredients=ingredients_dist)
+    ingredients = databaseGet.get_ingredients_to_recipe_by_recipe_id(post['id'])
+    return render_template('create.html', recipe=post, tags=tags, page_title="Редактирование", use_tags=using_tags_list, unusing_tags=unusing_tags_list, ingredients=ingredients)
 
 
 @app.route('/<recipe_url>/delete', methods=['POST'])
@@ -158,7 +162,10 @@ def search():
     title = request.args.get('title')
     tag_id = request.args.get('tag')
     ingredient = request.args.get('ingredient')
-    if title:
+    page = request.args.get('page')
+    if page:
+        recipes = DatabaseGet  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    elif title:
         recipes = databaseGet.search_posts_with_title(title.title())
     elif tag_id:
         recipes = databaseGet.get_recipe_with_tag_id(tag_id)
