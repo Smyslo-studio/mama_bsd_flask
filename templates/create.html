@@ -67,14 +67,32 @@
             <input type="file" name="file">
         </label>
 
-        <div id="inputing">
-            <h4>Ингредиенты</h4>
-            <div id="input01">
-                <label><input type="text" name="ingredient0"></label>
-                <label><input type="text" name="quantity0"></label>
-                <label><input type="text" name="quantity_spoon0"></label>
-            </div>
-        </div>
+        
+
+        <table class="table">
+            <thead>
+              <tr>
+                <th class="is-size-5 has-text-weight-medium">Ингредиент</th>
+                <th class="is-size-5 has-text-weight-medium">Объём</th>
+                <th class="is-size-5 has-text-weight-medium">Количество</th>
+                <th class="is-size-5 has-text-weight-medium"></th>
+              </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                  <th class="has-text-weight-light is-size-6">Название</th>
+                  <th class="has-text-weight-light is-size-6">Граммы/литры</th>
+                  <th class="has-text-weight-light is-size-6">Ложки</th>
+                </tr>
+              </tfoot>
+            <tbody id="table">
+                <tr id="input01">
+                    <td><label><input type="text" name="ingredient0"></label></td>
+                    <td><label><input type="text" name="quantity0"></label></td>
+                    <td><label><input type="text" name="quantity_spoon0"></label></td>
+                </tr>
+            </tbody>
+        </table>
 
         <input type="button" value="Добавить" onclick="addInput()">
         <div>

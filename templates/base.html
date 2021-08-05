@@ -40,7 +40,7 @@
                             <div class="control">
                                 <div class="tags has-addons are-large">
                                     <a class="tag is-link" href="search?tag={{ tag['id'] }}">{{ tag['title'] }}</a>
-                                    <a class="tag is-delete"></a>
+                                    <a class="tag is-delete" href="{{ tag['id'] }}/delete"></a>
                                 </div>
                             </div>
                         {% endfor %}

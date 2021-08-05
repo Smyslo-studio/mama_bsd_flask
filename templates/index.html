@@ -25,10 +25,7 @@
               <time>{{ recipe['created'] }}</time>
             </div>
           </div>
-          <div class="is-right">
-            <a href="{{ recipe['url'] }}/edit" class="button is-success is-light">Редактировать</a>
-            <a href="{{ recipe['url'] }}/delete" class="button is-danger is-light">Удалить</a>
-          </div>  
+          
         </div>
       {% endfor %}
     </div>
@@ -86,7 +83,7 @@
         </div>
       {% endfor %}
     </div>
-
+  </div>
     {% if pagination_list[0] == 1 %}
                   <nav class="pagination" role="navigation" aria-label="pagination">
                       <a class="pagination-previous" title="This is the first page" disabled>Предыдущая</a>

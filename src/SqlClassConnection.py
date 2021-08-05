@@ -107,7 +107,15 @@ class DatabasePost(object):
         self.connection.commit()
 
     def delete_post_with_url(self, url):
+        post = self.cursor.execute('SELECT * FROM recipes WHERE url = ?', (url,)).fetchone()
+        self.cursor.execute('DELETE FROM tags_recipes WHERE recipe = ?', (post['id'],))
         self.cursor.execute('DELETE FROM recipes WHERE url = ?', (url,))
+        self.cursor.execute('DELETE FROM ingredients WHERE recipe_id = ?', (post['id'],))
+        self.connection.commit()
+
+    def delete_tag_with_tag_id(self, tag_id):
+        self.cursor.execute('DELETE FROM tags WHERE id = ?', (tag_id,))
+        self.cursor.execute('DELETE FROM tags_recipes WHERE tag = ?', (tag_id,))
         self.connection.commit()
 
     def add_ingredient_to_db_with_list(self, recipe_id, ingredient_list, quantity_list, quantity_spoon_list):

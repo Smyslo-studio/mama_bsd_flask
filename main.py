@@ -70,11 +70,16 @@ def edit(recipe_url):
     return render_template('create.html', recipe=post, tags=tags, page_title="Редактирование", use_tags=using_tags_list, unusing_tags=unusing_tags_list, ingredients=ingredients)
 
 
-@app.route('/<recipe_url>/delete', methods=['POST'])
+@app.route('/<recipe_url>/delete', methods=['POST', 'GET'])
 def delete(recipe_url):
-    recipe_content = databaseGet.get_one_post_with_url(recipe_url)
     databasePost.delete_post_with_url(recipe_url)
-    flash('Рещепт "{}" был успешно удален!'.format(recipe_content['title']))
+    return redirect(url_for('index'))
+
+
+@app.route('/<tag_id>/delete', methods=['POST', 'GET'])
+def delete_tag(tag_id):
+    databasePost.delete_tag_with_tag_id(tag_id)
+    flash('Тег "{}" был успешно удален!'.format(tag_id))
     return redirect(url_for('index'))
 
 

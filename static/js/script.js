@@ -28,10 +28,12 @@ function search_generate_url(type, search_content) {
 }
 
 function addInput() {
-    var str = '<label><input type="text" name="ingredient' + (x + 1) + '"></label><label><input type="text" name="quantity' + (x + 1) + '"></label><label><input type="text" name="quantity_spoon' + (x + 1) + '"></label>';
-    var div_var = document.createElement("div");
-    div_var.innerHTML = str;
-    document.getElementById('inputing').append(div_var);
+    let id = "'input" + x + "'"
+    let str3 = '<td><button class="tag is-delete" onclick="delInput(' + (x + 1) + ')"></button></td>'
+    let str = '<td><label><input type="text" name="ingredient' + (x + 1) + '"></label></td><td><label><input type="text" name="quantity' + (x + 1) + '"></label></td><td><label><input type="text" name="quantity_spoon' + (x + 1) + '"></label></td><td><button class="tag is-delete" onclick="delInput(' + id + ')"></button></td>';
+    let tr_var = document.createElement("tr");
+    tr_var.innerHTML = str;
+    document.getElementById('table').append(tr_var);
     x++
 }
 
