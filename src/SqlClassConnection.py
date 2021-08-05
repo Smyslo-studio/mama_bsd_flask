@@ -61,6 +61,10 @@ class DatabaseGet(object):
         ingredients = self.cursor.execute("SELECT * FROM ingredients WHERE recipe_id=?", (recipe_id,)).fetchall()
         return ingredients
 
+    def get_q_all_recipes(self):
+        q = self.cursor.execute("SELECT COUNT(1) from recipes").fetchone()[0]
+        return q
+
     def __del__(self):
         print('Ok')
         self.cursor.close()

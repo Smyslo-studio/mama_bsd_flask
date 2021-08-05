@@ -58,7 +58,7 @@
     <p>{{ recipe['source'] }}</p>
 
     <div class="is-right">
-        <a href="{{ recipe['url'] }}/edit" class="button is-success is-light">Редактировать</a>
+        <a href="{{ recipe['url'] }}/edit" class="button is-success is-light"  onclick="return confirm('Вы уверены что хотите удалить этот рецепт?')">Редактировать</a>
         <a href="{{ recipe['url'] }}/delete" class="button is-danger is-light">Удалить</a>
     </div>
 {% endblock %}

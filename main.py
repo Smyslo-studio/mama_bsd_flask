@@ -39,7 +39,20 @@ def using_tags(recipe_url):
 
 @app.route('/', methods=('POST', 'GET'))
 def index():
-    recipes = databaseGet.get_posts_from_to(0, 100)
+    page = request.args.get('page')
+    if page:
+        page = int(page)
+        q = databaseGet.get_q_all_recipes()
+        recipes = databaseGet.get_posts_from_to(((page-1)*12), (page*12))
+        if page*12 >= q:
+            pagination_list = [page-1, 0, page+1]
+        else:
+            pagination_list = [page-1, page, page+1]
+    else:
+        pagination_list = [0, 1, 2]
+        recipes = databaseGet.get_posts_from_to(0, 12)
+
+    # распределение рецептов по столбикам
     i = 0
     recipes_list = [[], [], []]
     for res in recipes:
@@ -49,7 +62,7 @@ def index():
         i += 1
 
     all_tags = databaseGet.get_all_tags()
-    return render_template("index.html", recipes=recipes_list, tags=all_tags, pagination_list=0)
+    return render_template("index.html", recipes=recipes_list, tags=all_tags, pagination_list=pagination_list)
 
 
 @app.route('/<recipe_url>')
@@ -76,7 +89,7 @@ def delete(recipe_url):
     return redirect(url_for('index'))
 
 
-@app.route('/<tag_id>/delete', methods=['POST', 'GET'])
+@app.route('/<tag_id>/delete-tag', methods=['POST', 'GET'])
 def delete_tag(tag_id):
     databasePost.delete_tag_with_tag_id(tag_id)
     flash('Тег "{}" был успешно удален!'.format(tag_id))
@@ -168,9 +181,13 @@ def search():
     tag_id = request.args.get('tag')
     ingredient = request.args.get('ingredient')
     page = request.args.get('page')
+    print(title)
+    print(tag_id)
+    print(ingredient)
+    print(page)
     if page:
-        recipes = DatabaseGet  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    elif title:
+        recipes = 0  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    if title:
         recipes = databaseGet.search_posts_with_title(title.title())
     elif tag_id:
         recipes = databaseGet.get_recipe_with_tag_id(tag_id)

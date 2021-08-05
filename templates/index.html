@@ -4,8 +4,8 @@
   <div class="columns">
     <div class="column is-one-third">
       {% for recipe in recipes[0] %}
-        <div class="card">
-          <div class="card-image">
+        <div class="card my-4">
+          <div class="card-image p-auto">
             <figure class="image">
               <img src="{{ recipe['image'] }}" alt="Placeholder image">
             </figure>
@@ -32,8 +32,8 @@
 
     <div class="column is-one-third">
       {% for recipe in recipes[1] %}
-        <div class="card">
-          <div class="card-image">
+        <div class="card my-4">
+          <div class="card-image p-auto">
             <figure class="image">
               <img src="{{ recipe['image'] }}" alt="Placeholder image">
             </figure>
@@ -42,7 +42,7 @@
             <div class="media">
               
               <div class="media-content">
-                <p class="title is-4">{{ recipe['title'] }}</p>
+                <p><a href="{{ recipe['url'] }}" class="title is-4">{{ recipe['title'] }}</a></p>
                 <p class="subtitle is-6">{{ recipe['source'] }}</p>
               </div>
             </div>
@@ -53,14 +53,15 @@
               <time>{{ recipe['created'] }}</time>
             </div>
           </div>
+          
         </div>
       {% endfor %}
     </div>
-    
+
     <div class="column is-one-third">
       {% for recipe in recipes[2] %}
-        <div class="card">
-          <div class="card-image">
+        <div class="card my-4">
+          <div class="card-image p-auto">
             <figure class="image">
               <img src="{{ recipe['image'] }}" alt="Placeholder image">
             </figure>
@@ -69,7 +70,7 @@
             <div class="media">
               
               <div class="media-content">
-                <p class="title is-4">{{ recipe['title'] }}</p>
+                <p><a href="{{ recipe['url'] }}" class="title is-4">{{ recipe['title'] }}</a></p>
                 <p class="subtitle is-6">{{ recipe['source'] }}</p>
               </div>
             </div>
@@ -80,62 +81,26 @@
               <time>{{ recipe['created'] }}</time>
             </div>
           </div>
+          
         </div>
       {% endfor %}
     </div>
   </div>
-    {% if pagination_list[0] == 1 %}
-                  <nav class="pagination" role="navigation" aria-label="pagination">
-                      <a class="pagination-previous" title="This is the first page" disabled>Предыдущая</a>
-                      <a class="pagination-next">Следующая</a>
-                      <ul class="pagination-list">
-                      <li>
-                          <a class="pagination-link is-current" href="/search?page=1" aria-label="Goto page 1" aria-current="page">1</a>
-                      </li>
-                      <li>
-                          <a class="pagination-link" href="/search?page=2" aria-label="Goto page 2">2</a>
-                      </li>
-                      <li>
-                          <a class="pagination-link" href="/search?page=3" aria-label="Goto page 3">1</a>
-                      </li>
-                      <li>
-                          <span class="pagination-ellipsis">&hellip;</span>
-                      </li>
-                      <li>
-                          <a class="pagination-link" href="/search?page={{ pagination_list[4] }}" aria-label="Goto page {{ pagination_list[4] }}">{{ pagination_list[4] }}</a>
-                      </li>
-                  </nav>
-              {% elif pagination_list[0] == 2 %}
-              {% else %}
-                  <nav class="pagination" role="navigation" aria-label="pagination">
-                      <a class="pagination-previous">Предыдущая</a>
-                      <a class="pagination-next">Следующая</a>
-                      <ul class="pagination-list">
-                          <li>
-                              <a class="pagination-link" aria-label="Goto page 1">1</a>
-                          </li>
-                          <li>
-                              <span class="pagination-ellipsis">&hellip;</span>
-                          </li>
-                          <li>
-                              <a class="pagination-link" aria-label="Goto page 45">45</a>
-                          </li>
-                          <li>
-                              <a class="pagination-link is-current" aria-label="Page 46" aria-current="page">46</a>
-                          </li>
-                          <li>
-                              <a class="pagination-link" aria-label="Goto page 47">47</a>
-                          </li>
-                          <li>
-                              <span class="pagination-ellipsis">&hellip;</span>
-                          </li>
-                          <li>
-                              <a class="pagination-link" aria-label="Goto page 86">86</a>
-                          </li>
-                      </ul>
-                  </nav>
-              {% endif %}
-          </div>
-  </div>
+    {% if pagination_list[1] == 1 %}
+      <nav class="pagination" role="navigation" aria-label="pagination">
+        <a class="pagination-previous" title="This is the first page" disabled href="/?page={{ pagination_list[0] }}">Предыдущая</a>
+        <a class="pagination-next" href="/?page={{ pagination_list[2] }}">Следующая</a>
+      </nav>
+    {% elif pagination_list[1] == 0 %}
+      <nav class="pagination" role="navigation" aria-label="pagination">
+        <a class="pagination-previous" href="/?page={{ pagination_list[0] }}">Предыдущая</a>
+        <a class="pagination-next" title="This is the last page" disabled href="/?page={{ pagination_list[2] }}">Следующая</a>
+      </nav>
+    {% else %}
+      <nav class="pagination" role="navigation" aria-label="pagination">
+        <a class="pagination-previous" href="/?page={{ pagination_list[0] }}">Предыдущая</a>
+        <a class="pagination-next" href="/?page={{ pagination_list[2] }}">Следующая</a>
+      </nav>
+    {% endif %}
     
 {% endblock %}
